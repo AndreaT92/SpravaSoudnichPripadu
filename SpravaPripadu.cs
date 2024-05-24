@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace SpravaSoudnichPripadu
 {
-    public class Sprava
+    public class SpravaPripadu
     {
         public List<Pripad> Pripady { get; set; }
         public Dictionary<int, Pripad> PripadDict { get; set; }
 
-        public Sprava()
+        public SpravaPripadu()
         {
             Pripady = new List<Pripad>();
             PripadDict = new Dictionary<int, Pripad>();

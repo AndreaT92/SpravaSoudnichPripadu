@@ -8,9 +8,14 @@ namespace SpravaSoudnichPripadu
 {
     public class Pripad
     {
+        // třída pro případy
+        //datum jednání? skončeno? vyplacena odměna? sop (soudní poplatek)?
+
         public bool JeSkonceno;
 
         public bool SopZaplacen;
+
+        public bool JeOdmenaZaplacena;
         public int CisloPripadu { get; set; }
         public string Popis { get; set; }
         public List<Ucastnik> Ucastnici { get; set; }
@@ -24,7 +29,6 @@ namespace SpravaSoudnichPripadu
             Zastupci = new List<Zastupce>();
         }
 
-        //odvozena třída pro případy? 
-        //datum jednání? skončeno? vyplacena odměna? sop?
+
     }
 }
