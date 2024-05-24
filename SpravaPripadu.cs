@@ -47,5 +47,32 @@ namespace SpravaSoudnichPripadu
             Pripady.Remove(pripad);
             PripadDict.Remove(cisloPripadu);
         }
+
+        public List<Pripad> FiltrovatPripady(DateTime? datumJednani, bool? jeSkonceno, string soudce, string zastupce)
+        {
+            var filtrovanePripady = Pripady.AsQueryable();
+
+            if (datumJednani.HasValue)
+            {
+                filtrovanePripady = filtrovanePripady.Where(p => p.DatumJednani.Date == datumJednani.Value.Date);
+            }
+
+            if (jeSkonceno.HasValue)
+            {
+                filtrovanePripady = filtrovanePripady.Where(p => p.JeSkonceno == jeSkonceno.Value);
+            }
+
+            if (!string.IsNullOrEmpty(soudce))
+            {
+                filtrovanePripady = filtrovanePripady.Where(p => (p.Soudci.Jmeno + " " + p.Soudci.Prijmeni).Contains(soudce));
+            }
+
+            if (!string.IsNullOrEmpty(zastupce))
+            {
+                filtrovanePripady = filtrovanePripady.Where(p => p.Zastupci.Any(z => (z.Jmeno + " " + z.Prijmeni).Contains(zastupce)));
+            }
+
+            return filtrovanePripady.ToList();
+        }
     }
 }

@@ -64,15 +64,13 @@
                 };
 
                 pripad.Ucastnici.Add(ucastnik1);
+                pripad.Ucastnici.Add(ucastnik2);
+                pripad.Zastupci.Add(zastupce1);
 
                 spravaPripadu.PridatPripad(pripad);
 
-                var nalezenyPripad = spravaPripadu.NajitPripad(1);
-                Console.WriteLine($"Nalezený případ: {nalezenyPripad.Popis}. Soudní poplatek zaplacen: {nalezenyPripad.SopZaplacen}. Jednání nařízeno na den: {nalezenyPripad.DatumJednani}. Případ skončen: {nalezenyPripad.JeSkonceno}. ");
-
-
-                spravaPripadu.OdebratPripad(1);
-                Console.WriteLine("Případ byl úspěšně odstraněn.");
+                var logikaFiltrovani = new LogikaFiltrovani(spravaPripadu);
+                logikaFiltrovani.Spustit();
             }
             catch (Exception ex)
             {
