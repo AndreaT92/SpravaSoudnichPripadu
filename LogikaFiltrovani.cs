@@ -8,6 +8,7 @@ namespace SpravaSoudnichPripadu
 {
     internal class LogikaFiltrovani
     {
+        // vytvořit jase základní abstract class pro LogikuFiltrovani a SpravuPripadu a abstract metodami pripadpripad, najitpripad, odebratpripad,  list filtrovatpripady?? 
         private SpravaPripadu spravaPripadu;
 
         public LogikaFiltrovani(SpravaPripadu spravaPripadu)
