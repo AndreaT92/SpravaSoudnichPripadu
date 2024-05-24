@@ -13,8 +13,5 @@ namespace SpravaSoudnichPripadu
 
         public int CisloCak; 
 
-
-        
-
     }
 }
