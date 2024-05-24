@@ -7,14 +7,12 @@
             //Cílem projektu je vytvořit aplikaci pro správu soudních případů,
             //která umožní soudům efektivně řídit a sledovat jednotlivé případy,
             //účastníky soudních řízení, termíny soudních jednání a časem možná i relevantní dokumenty.
-            //Aplikace by měla poskytovat přehledné rozhraní pro správu těchto informací
-            //a zajišťovat snadný přístup ke všem potřebným datům.
 
-            // kolekce k ukládání a správě všech případů, účastníků a zástupců?
+            
 
-            // výjimky, špatné vstupy - neplatne jmeno? 
+            // výjimky, špatné vstupy - přes try catch? 
 
-            // filtrovani jednani dle různych kriterii (datum, stav, soudce...)
+            // filtrovani jednani dle různych kriterii (datum, stav, soudce...) ?
 
             var spravaPripadu = new SpravaPripadu();
 

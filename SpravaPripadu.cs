@@ -8,6 +8,7 @@ namespace SpravaSoudnichPripadu
 {
     public class SpravaPripadu
     {
+        // Kolekce k ukládání a správě všech případů, účastníků a zástupců?
         public List<Pripad> Pripady { get; set; }
         public Dictionary<int, Pripad> PripadDict { get; set; }
 
