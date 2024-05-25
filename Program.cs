@@ -5,14 +5,16 @@
         static void Main(string[] args)
         {
             //Cílem projektu je vytvořit aplikaci pro správu soudních případů,
-            //která umožní soudům efektivně řídit a sledovat jednotlivé případy,
+            //která umožní soudům sledovat a filtrovat jednotlivé případy,
             //účastníky soudních řízení, termíny soudních jednání a časem možná i relevantní dokumenty.
 
-            
+
 
             // výjimky, špatné vstupy - přes try catch? 
 
             // filtrovani jednani dle různych kriterii (datum, stav, soudce...) ?
+
+            // umožnit zadávat nové případy přes vstup uživatele? 
 
             var spravaPripadu = new SpravaPripadu();
 

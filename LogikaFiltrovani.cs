@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SpravaSoudnichPripadu
+﻿namespace SpravaSoudnichPripadu
 {
     internal class LogikaFiltrovani
     {
-        // vytvořit jase základní abstract class pro LogikuFiltrovani a SpravuPripadu a abstract metodami pripadpripad, najitpripad, odebratpripad,  list filtrovatpripady?? 
+        // vytvořit jase základní abstract class pro LogikuFiltrovani a SpravuPripadu a abstract metodami pripadpripad, najitpripad, odebratpripad,  list filtrovatpripady??  Mělo by to smysl? 
         private SpravaPripadu spravaPripadu;
 
         public LogikaFiltrovani(SpravaPripadu spravaPripadu)
@@ -115,6 +109,36 @@ namespace SpravaSoudnichPripadu
                 }
             }
         }
+        //    //private string ZmensiPismeno(string prompt) - metoda na podchycení špatně zadaného malého písmena u jména - doplnit do FiltrovatPripady
+        //    //{
+        //    //    while (true)
+        //    //    {
+        //    //        Console.Write("Zadejte jméno: ");
+        //    var jmeno = Console.ReadLine();
+        //    if (IsValidName(name))
+        //    {
+        //        return string.IsNullOrEmpty(name) ? null : name.ToLower(); // Normalizace na malá písmena
+        //    }
+        //Console.WriteLine("Neplatné jméno. Zadejte pouze písmena a mezery.");
+        //    //    }
+        //}
+
+        //private bool jeJmenoSpravne(string jmeno) - metoda na kontrolu, zda bylo zadáno jméno správně - doplnit do FiltrovatPripady
+        //{
+        //    if (string.IsNullOrEmpty(jmeno))
+        //    {
+        //        return true; // Prázdný vstup je povolen
+        //    }
+        //    foreach (char c in jmeno)
+        //    {
+        //        if (!char.IsLetter(c) && c != ' ')
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    return true;
+        //}
+
+
     }
 }
-    
