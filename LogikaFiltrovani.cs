@@ -20,7 +20,7 @@
                 Console.WriteLine("2 - Filtrovat případy podle kritérii");
                 Console.WriteLine("3 - Odstranit případ dle čísla");
                 Console.WriteLine("4 - Konec");
-
+                // ještě by se mi líbilo hledání osob a informací o nic  + případy, ve kterých se vyskytují 
                 var akce = Console.ReadLine();
 
                 if (akce == "4")
