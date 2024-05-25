@@ -63,6 +63,7 @@
         }
 
         // logika na filtrování případů - podle všeho chci? Chci podle všech parametrů? Ošetření špatných vstupů zapracovat zde (malé písmeno u jména atd..)
+        // vytvořit metodu pro každou položku filtrování zvlášť pro přehlednost??
         private void FiltrovatPripady()
         {
             Console.Write("Zadejte datum jednání (YYYY-MM-DD) nebo nechte prázdné: ");
