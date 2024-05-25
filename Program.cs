@@ -8,13 +8,13 @@
             //která umožní soudům sledovat a filtrovat jednotlivé případy,
             //účastníky soudních řízení, termíny soudních jednání a časem možná i relevantní dokumenty.
 
+            // výjimky - přes try catch? 
 
+            // filtrovani jednani dle různych kriterii (datum, stav, soudce...) - přes metodu ve spec. class?
 
-            // výjimky, špatné vstupy - přes try catch? 
-
-            // filtrovani jednani dle různych kriterii (datum, stav, soudce...) ?
-
-            // umožnit zadávat nové případy přes vstup uživatele? 
+            // ráda bych, aby byl Main co nejkratší, takže se mi nelíbí zadávání případů v main metodě. Zatím to tak mám pro test funkčnosti.
+            // Kdybychom měli případů sto, tak jak by to vypadalo. Chtěla bych nějaké defaultní případy od spuštění
+            // a plus možnost zadat nové od uživatele a aby si je to pak tedy uchovalo. 
 
             var spravaPripadu = new SpravaPripadu();
 
@@ -64,14 +64,17 @@
                     SopZaplacen = false,
                     JeOdmenaZaplacena = false,
                 };
-
+                // přidání do jednotlivých kolekcí
                 pripad.Ucastnici.Add(ucastnik1);
                 pripad.Ucastnici.Add(ucastnik2);
                 pripad.Zastupci.Add(zastupce1);
-
+                // přidání do kolekce případů
                 spravaPripadu.PridatPripad(pripad);
 
                 var logikaFiltrovani = new LogikaFiltrovani(spravaPripadu);
+
+                // spuštění filtrovací metody 
+
                 logikaFiltrovani.Spustit();
             }
             catch (Exception ex)

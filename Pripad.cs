@@ -2,8 +2,9 @@
 {
     public class Pripad
     {
-        // třída pro případy
-        //datum jednání? skončeno? vyplacena odměna? sop (soudní poplatek)?
+        // třída pro základní properties případu
+        // propojit nějak se správou případů ? logikou filtrování?
+        
 
         public bool JeSkonceno;
 
