@@ -1,4 +1,6 @@
-﻿namespace SpravaSoudnichPripadu
+﻿using SpravaSoudnichPripadu.osoby;
+
+namespace SpravaSoudnichPripadu
 {
     public class Pripad
     {
@@ -7,10 +9,6 @@
         
 
         public bool JeSkonceno;
-
-        public bool SopZaplacen;
-
-        public bool JeOdmenaZaplacena;
         public int CisloPripadu { get; set; }
         public string Popis { get; set; }
         public List<Ucastnik> Ucastnici { get; set; }

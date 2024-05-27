@@ -1,4 +1,6 @@
-﻿namespace SpravaSoudnichPripadu
+﻿using SpravaSoudnichPripadu.osoby;
+
+namespace SpravaSoudnichPripadu
 {
     internal class Program
     {
@@ -25,7 +27,7 @@
                     Jmeno = "Jan",
                     Prijmeni = "Novak",
                     Adresa = "Praha 1",
-                    Specializace = "Civilní právo"
+                    Specializace = Specializace.CivilníPrávo
                 };
 
                 var ucastnik1 = new Ucastnik
@@ -33,8 +35,7 @@
                     Jmeno = "Petr",
                     Prijmeni = "Svoboda",
                     Adresa = "Brno",
-                    unikatniCislo = 101,
-                    roleVRizeni = "žalobce"
+                    roleVRizeni = RoleVRizeni.Žalobce
                 };
 
                 var ucastnik2 = new Ucastnik
@@ -42,8 +43,7 @@
                     Jmeno = "Jan",
                     Prijmeni = "Malý",
                     Adresa = "Praha",
-                    unikatniCislo = 102,
-                    roleVRizeni = "žalovaný"
+                    roleVRizeni = RoleVRizeni.Žalovaný
                 };
 
                 var zastupce1 = new Zastupce
@@ -51,7 +51,7 @@
                     Jmeno = "Oldřich",
                     Prijmeni = "Přísný",
                     Adresa = "Praha",
-                    CisloCak = 125125
+                    cak = 125125
                 };
 
                 var pripad = new Pripad
@@ -61,15 +61,13 @@
                     DatumJednani = new DateTime(2024, 6, 1),
                     Soudci = soudce1,
                     JeSkonceno = false,
-                    SopZaplacen = false,
-                    JeOdmenaZaplacena = false,
                 };
                 // přidání do jednotlivých kolekcí
                 pripad.Ucastnici.Add(ucastnik1);
                 pripad.Ucastnici.Add(ucastnik2);
                 pripad.Zastupci.Add(zastupce1);
                 // přidání do kolekce případů
-                spravaPripadu.PridatPripad(pripad);
+                spravaPripadu.PridatPripad(new DateTime(2024, 6, 1));
 
                 var logikaFiltrovani = new LogikaFiltrovani(spravaPripadu);
 

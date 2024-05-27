@@ -1,6 +1,6 @@
-﻿namespace SpravaSoudnichPripadu
+﻿namespace SpravaSoudnichPripadu.osoby
 {
-    public class Osoba
+    public abstract class Osoba
     {
         //základní třída pro všechny osoby
         public string Jmeno { get; set; }

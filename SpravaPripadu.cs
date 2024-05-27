@@ -1,9 +1,10 @@
 ﻿namespace SpravaSoudnichPripadu
 {
-    public class SpravaPripadu : SpravaPripaduBase
+    public class SpravaPripadu 
     {
         // class pro spravování kolekcí případů - přidat, najít, odebrat, filtrovat 
         // metody pro manipulaci s daty
+        private int pocitadloPripadu;
         public List<Pripad> Pripady { get; set; }
         public Dictionary<int, Pripad> PripadDict { get; set; } // pro lepší hledání přes číslo? 
 
@@ -11,39 +12,41 @@
         {
             Pripady = new List<Pripad>();
             PripadDict = new Dictionary<int, Pripad>();
+            pocitadloPripadu = 0;
         }
 
-        public override void PridatPripad(Pripad pripad) 
+        public void PridatPripad(DateTime datumJednani) // přidat ostatní parametry !!!
         {
-            if (PripadDict.ContainsKey(pripad.CisloPripadu)) 
+            Pripad pripad = new Pripad
             {
-                throw new ArgumentException("Případ s tímto číslem již existuje.");
-            }
+                DatumJednani = datumJednani,
+                CisloPripadu = ++pocitadloPripadu
+            };
+
             Pripady.Add(pripad);
             PripadDict[pripad.CisloPripadu] = pripad;
         }
 
-        public override Pripad NajitPripadPodleCisla(int cisloPripadu)
+        public Pripad NajitPripadPodleCisla(int cisloPripadu)
         {
-            if (!PripadDict.ContainsKey(cisloPripadu)) // možná tohle vyházet, když to řešim v logice filtrování?
-            {
-                throw new KeyNotFoundException("Případ s tímto číslem neexistuje.");
-            }
-            return PripadDict[cisloPripadu];
+            PripadDict.TryGetValue(cisloPripadu, out Pripad pripad);
+            return pripad;
+            // možná tohle vyházet, když to řešim v logice filtrování?
+
         }
 
-        public override void OdebratPripad(int cisloPripadu)
+        public bool OdebratPripad(int cisloPripadu)
         {
-            if (!PripadDict.ContainsKey(cisloPripadu)) // možná tohle vyházet, když to řešim v logice filtrování?
-            {
-                throw new KeyNotFoundException("Případ s tímto číslem neexistuje.");
+            bool povedloSe = PripadDict.TryGetValue(cisloPripadu, out Pripad pripad);
+            if (povedloSe) 
+            { 
+                Pripady.Remove(pripad);
+                PripadDict.Remove(cisloPripadu);
             }
-            var pripad = PripadDict[cisloPripadu];
-            Pripady.Remove(pripad);
-            PripadDict.Remove(cisloPripadu);
+            return povedloSe;
         }
 
-        public override List<Pripad> FiltrovatPripady(DateTime? datumJednani, bool? jeSkonceno, string soudce, string zastupce) // metoda, která vytvoří list vyfiltrovaných případů, nechat tady? Chtělo by to víc ůdajů na vypsání. Dala jsem zkušební část. 
+        public List<Pripad> FiltrovatPripady(DateTime? datumJednani, bool? jeSkonceno, string soudce, string zastupce) // metoda, která vytvoří list vyfiltrovaných případů, nechat tady? Chtělo by to víc ůdajů na vypsání. Dala jsem zkušební část. 
         {
             var filtrovanePripady = Pripady.AsQueryable(); // po googlování by to mělo mělo kolekci převést na IQueryable<Pripad> a 
                                                            // umožnit mi provádět linq dotazy lépe - kdybych chtěla v budoucnu dělat složitější

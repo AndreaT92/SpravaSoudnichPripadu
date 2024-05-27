@@ -5,9 +5,9 @@
         // toto je třída pro vytvoření logiky pro interakci s uživatelem (UI) a pro výběr akcí  (co se bude ukazovat uživateli a jak se to bude chovat)
         // zpracování vstupů a výpis výsledků
         
-        private SpravaPripaduBase spravaPripadu;
+        private SpravaPripadu spravaPripadu;
 
-        public LogikaFiltrovani(SpravaPripaduBase spravaPripadu)
+        public LogikaFiltrovani(SpravaPripadu spravaPripadu)
         {
             this.spravaPripadu = spravaPripadu;
         }
@@ -56,21 +56,19 @@
             Console.Write("Zadejte číslo případu: ");
             if (int.TryParse(Console.ReadLine(), out int cisloPripadu))
             {
-                try
+
+                var nalezenyPripad = spravaPripadu.NajitPripadPodleCisla(cisloPripadu);
+                if (nalezenyPripad == null)
                 {
-                    var nalezenyPripad = spravaPripadu.NajitPripadPodleCisla(cisloPripadu);
-                    Console.WriteLine($"Nalezený případ: {nalezenyPripad.Popis}. " +
+                    Console.WriteLine("Případ nenalezen.");
+                    return;
+                }
+                Console.WriteLine($"Nalezený případ: {nalezenyPripad.Popis}. " +
                                       $"Soudce: {nalezenyPripad.Soudci.Jmeno} {nalezenyPripad.Soudci.Prijmeni}. " +
                                       $"Specializace: {nalezenyPripad.Soudci.Specializace}." +
-                                      $"Soudní poplatek zaplacen: {nalezenyPripad.SopZaplacen}. " +
                                       $"Jednání nařízeno na den: {nalezenyPripad.DatumJednani}. " +
                                       $"Případ skončen: {nalezenyPripad.JeSkonceno}. "); ; ;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Žádný takový případ nebyl nalezen.");
-                    Console.WriteLine();
-                }
+                
             }
             else
             {
@@ -169,12 +167,12 @@
             Console.Write("Zadejte číslo případu k odstranění: ");
             if (int.TryParse(Console.ReadLine(), out int cisloPripaduOdebrat))
             {
-                try
+                 bool povedloSe = spravaPripadu.OdebratPripad(cisloPripaduOdebrat);
+                if (povedloSe)
                 {
-                    spravaPripadu.OdebratPripad(cisloPripaduOdebrat);
                     Console.WriteLine("Případ byl úspěšně odstraněn.");
                 }
-                catch (Exception ex)
+                else
                 {
                     Console.WriteLine("Žádný takový případ nebyl nalezen.");
                     Console.WriteLine();
