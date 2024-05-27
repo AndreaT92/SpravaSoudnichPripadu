@@ -4,7 +4,7 @@
     {
         // toto je třída pro vytvoření logiky pro interakci s uživatelem (UI) a pro výběr akcí  (co se bude ukazovat uživateli a jak se to bude chovat)
         // zpracování vstupů a výpis výsledků
-        // vytvořit základní abstract class pro LogikuFiltrovani a SpravuPripadu a Pripady? Abstract metody NajitPripad + FiltrovatPripady + OdebratPripad?
+        
         private SpravaPripaduBase spravaPripadu;
 
         public LogikaFiltrovani(SpravaPripaduBase spravaPripadu)
@@ -83,13 +83,8 @@
         // vytvořit metodu pro každou položku filtrování zvlášť pro větší přehlednost??
         private void FiltrovatPripady() // metoda pro samotné filtrování a vyhledání, vygooglila jsem si nullable pro ošetření vstupu.. co ale když zadá špatně datetime? umožnit jim to zadat znovu? Nutno přepsat :D 
         {
-            Console.Write("Zadejte datum jednání (YYYY-MM-DD) nebo nechte prázdné: "); // filtr podle jednání
-            var datumInput = Console.ReadLine();
-            DateTime? datumJednani = string.IsNullOrEmpty(datumInput) ? (DateTime?)null : DateTime.Parse(datumInput);
-
-            Console.Write("Zadejte stav skončení případu (true/false) nebo nechte prázdné: "); // filtr podle stavu
-            var stavInput = Console.ReadLine();
-            bool? jeSkonceno = string.IsNullOrEmpty(stavInput) ? (bool?)null : bool.Parse(stavInput);
+            DateTime? datumJednani = HledaniPodleDataJednani();
+            bool? jeSkonceno = HledaniPodleStavu();
 
             Console.Write("Zadejte jméno soudce nebo nechte prázdné: "); // filtr dle soudce, dopárovat s metodami JeJmenoSpravne a ZmensiPismeno
             var soudce = Console.ReadLine();
@@ -113,6 +108,60 @@
                 Console.WriteLine("Žádný takový případ nebyl nalezen.");
                 Console.WriteLine();
             }
+        }
+
+        private static bool? HledaniPodleStavu() // metoda pro ošetření vstupu pro hledání dle stavu 
+        {
+            bool? jeSkonceno = null;
+
+            do
+            {
+                Console.Write("Zadejte stav skončení případu (true/false) nebo nechte prázdné: "); // filtr podle stavu
+                var stavHledany = Console.ReadLine();
+
+                if (string.IsNullOrEmpty(stavHledany))
+                {
+                    break; // Pokud je vstup prázdný, ukončíme smyčku
+                }
+
+                if (bool.TryParse(stavHledany, out bool parsedBool))
+                {
+                    jeSkonceno = parsedBool;
+                }
+                else
+                {
+                    Console.WriteLine("Chybný formát. Zadejte prosím 'true' nebo 'false'.");
+                    // Zde můžete provést další akce v případě chybného formátu
+                }
+            } while (jeSkonceno == null);
+            return jeSkonceno;
+        }
+
+        private static DateTime? HledaniPodleDataJednani() // metoda pro ošetření vstupu pro hledání podle data jednání
+        {
+            DateTime? datumJednani = null;
+
+            do
+            {
+                Console.Write("Zadejte datum jednání (YYYY-MM-DD) nebo nechte prázdné: "); // filtr podle jednání
+                var datumHledane = Console.ReadLine();
+
+                if (string.IsNullOrEmpty(datumHledane))
+                {
+                    break;
+                }
+
+                if (DateTime.TryParse(datumHledane, out DateTime parsedDate))
+                {
+                    datumJednani = parsedDate;
+                }
+                else
+                {
+                    Console.WriteLine("Chybný formát data. Zadejte prosím datum ve formátu YYYY-MM-DD.");
+
+                }
+            } while (datumJednani == null);
+            return datumJednani;
         }
 
         private void OdebratPripad() // metoda pro odebrání případu podle čísla
