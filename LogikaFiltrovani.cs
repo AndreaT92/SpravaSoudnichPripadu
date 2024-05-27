@@ -2,11 +2,12 @@
 {
     internal class LogikaFiltrovani
     {
-        // toto je třída pro vytvoření logiky pro interface (co se bude ukazovat uživateli a jak se to bude chovat)
+        // toto je třída pro vytvoření logiky pro interakci s uživatelem (UI) a pro výběr akcí  (co se bude ukazovat uživateli a jak se to bude chovat)
+        // zpracování vstupů a výpis výsledků
         // vytvořit základní abstract class pro LogikuFiltrovani a SpravuPripadu a Pripady? Abstract metody NajitPripad + FiltrovatPripady + OdebratPripad?
-        private SpravaPripadu spravaPripadu;
+        private SpravaPripaduBase spravaPripadu;
 
-        public LogikaFiltrovani(SpravaPripadu spravaPripadu)
+        public LogikaFiltrovani(SpravaPripaduBase spravaPripadu)
         {
             this.spravaPripadu = spravaPripadu;
         }

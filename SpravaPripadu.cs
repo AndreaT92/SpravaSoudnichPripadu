@@ -1,8 +1,9 @@
 ﻿namespace SpravaSoudnichPripadu
 {
-    public class SpravaPripadu
+    public class SpravaPripadu : SpravaPripaduBase
     {
-        // class pro spravování případů - přidat, najít, odebrat, filtrovat 
+        // class pro spravování kolekcí případů - přidat, najít, odebrat, filtrovat 
+        // metody pro manipulaci s daty
         public List<Pripad> Pripady { get; set; }
         public Dictionary<int, Pripad> PripadDict { get; set; } // pro lepší hledání přes číslo? 
 
@@ -12,7 +13,7 @@
             PripadDict = new Dictionary<int, Pripad>();
         }
 
-        public void PridatPripad(Pripad pripad) 
+        public override void PridatPripad(Pripad pripad) 
         {
             if (PripadDict.ContainsKey(pripad.CisloPripadu)) 
             {
@@ -22,7 +23,7 @@
             PripadDict[pripad.CisloPripadu] = pripad;
         }
 
-        public Pripad NajitPripadPodleCisla(int cisloPripadu)
+        public override Pripad NajitPripadPodleCisla(int cisloPripadu)
         {
             if (!PripadDict.ContainsKey(cisloPripadu)) // možná tohle vyházet, když to řešim v logice filtrování?
             {
@@ -31,7 +32,7 @@
             return PripadDict[cisloPripadu];
         }
 
-        public void OdebratPripad(int cisloPripadu)
+        public override void OdebratPripad(int cisloPripadu)
         {
             if (!PripadDict.ContainsKey(cisloPripadu)) // možná tohle vyházet, když to řešim v logice filtrování?
             {
@@ -42,7 +43,7 @@
             PripadDict.Remove(cisloPripadu);
         }
 
-        public List<Pripad> FiltrovatPripady(DateTime? datumJednani, bool? jeSkonceno, string soudce, string zastupce) // metoda, která vytvoří list vyfiltrovaných případů, nechat tady? Chtělo by to víc ůdajů na vypsání. Dala jsem zkušební část. 
+        public override List<Pripad> FiltrovatPripady(DateTime? datumJednani, bool? jeSkonceno, string soudce, string zastupce) // metoda, která vytvoří list vyfiltrovaných případů, nechat tady? Chtělo by to víc ůdajů na vypsání. Dala jsem zkušební část. 
         {
             var filtrovanePripady = Pripady.AsQueryable(); // po googlování by to mělo mělo kolekci převést na IQueryable<Pripad> a 
                                                            // umožnit mi provádět linq dotazy lépe - kdybych chtěla v budoucnu dělat složitější
