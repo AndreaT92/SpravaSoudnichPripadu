@@ -12,7 +12,7 @@
             PripadDict = new Dictionary<int, Pripad>();
         }
 
-        public void PridatPripad(Pripad pripad)
+        public void PridatPripad(Pripad pripad) 
         {
             if (PripadDict.ContainsKey(pripad.CisloPripadu)) 
             {
@@ -22,7 +22,7 @@
             PripadDict[pripad.CisloPripadu] = pripad;
         }
 
-        public Pripad NajitPripad(int cisloPripadu)
+        public Pripad NajitPripadPodleCisla(int cisloPripadu)
         {
             if (!PripadDict.ContainsKey(cisloPripadu)) // možná tohle vyházet, když to řešim v logice filtrování?
             {

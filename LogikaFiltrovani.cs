@@ -12,6 +12,8 @@
         }
 
         public void Spustit() // metoda pro zobrazení výběru možností + potřebuji přidat case na přidání případu
+                              // ještě by se mi líbilo hledání osob a informací o nich  + případy, ve kterých se vyskytují 
+                              // možná funkce vypsání všech evidovaných případů? 
         {
             while (true)
             {
@@ -19,8 +21,10 @@
                 Console.WriteLine("1 - Najít případ dle čísla");
                 Console.WriteLine("2 - Filtrovat případy podle kritérii");
                 Console.WriteLine("3 - Odstranit případ dle čísla");
+                //Console.WriteLine(" Najít případ podle osoby."); + přidat metodu NajitPripadPodleOsoby
+                // Console.WriteLine ("Vypsat všechny evidované případy")
                 Console.WriteLine("4 - Konec");
-                // ještě by se mi líbilo hledání osob a informací o nic  + případy, ve kterých se vyskytují 
+                
                 var akce = Console.ReadLine();
 
                 if (akce == "4")
@@ -31,7 +35,7 @@
                 switch (akce)
                 {
                     case "1":
-                        NajitPripad();
+                        NajitPripadPodleCisla(); 
                         break;
                     case "2":
                         FiltrovatPripady();
@@ -46,21 +50,25 @@
             }
         }
 
-        private void NajitPripad() // metoda, která vyhledá případ  - je matoucí, že se to jmenuje stejně jako metody ve SpravaPripadu?
+        private void NajitPripadPodleCisla() // metoda, která vyhledá případ podle čísla  - je matoucí, že se to jmenuje stejně jako metoda ve SpravaPripadu? 
         {
             Console.Write("Zadejte číslo případu: ");
             if (int.TryParse(Console.ReadLine(), out int cisloPripadu))
             {
                 try
                 {
-                    var nalezenyPripad = spravaPripadu.NajitPripad(cisloPripadu);
-                    Console.WriteLine($"Nalezený případ: {nalezenyPripad.Popis}. Soudní poplatek zaplacen: {nalezenyPripad.SopZaplacen}. Jednání nařízeno na den: {nalezenyPripad.DatumJednani}. Případ skončen: {nalezenyPripad.JeSkonceno}. ");
-                    
+                    var nalezenyPripad = spravaPripadu.NajitPripadPodleCisla(cisloPripadu);
+                    Console.WriteLine($"Nalezený případ: {nalezenyPripad.Popis}. " +
+                                      $"Soudce: {nalezenyPripad.Soudci.Jmeno} {nalezenyPripad.Soudci.Prijmeni}. " +
+                                      $"Specializace: {nalezenyPripad.Soudci.Specializace}." +
+                                      $"Soudní poplatek zaplacen: {nalezenyPripad.SopZaplacen}. " +
+                                      $"Jednání nařízeno na den: {nalezenyPripad.DatumJednani}. " +
+                                      $"Případ skončen: {nalezenyPripad.JeSkonceno}. "); ; ;
                 }
-                catch (Exception ex) // asi zbytečné, kdyz to mam ošetřeno uz ve SpravePripadu? Ale tam když to spadne, tak je to jako vyjimka a nemůže hledat dál... 
+                catch (Exception ex)
                 {
                     Console.WriteLine("Žádný takový případ nebyl nalezen.");
-                    Console.WriteLine(); 
+                    Console.WriteLine();
                 }
             }
             else
@@ -89,6 +97,7 @@
             var zastupce = Console.ReadLine();
 
             // přidat filtr dle účastníka, sop zaplacen... 
+            // dat tenhle cyklus taky jako samostatnou metodu? 
 
             var filtrovanePripady = spravaPripadu.FiltrovatPripady(datumJednani, jeSkonceno, soudce, zastupce);
             if (filtrovanePripady.Any())  // nemanipuluju tady s daty, tak jsem použila 
@@ -105,7 +114,7 @@
             }
         }
 
-        private void OdebratPripad() // metoda pro odebrání případu
+        private void OdebratPripad() // metoda pro odebrání případu podle čísla
         {
             Console.Write("Zadejte číslo případu k odstranění: ");
             if (int.TryParse(Console.ReadLine(), out int cisloPripaduOdebrat))
