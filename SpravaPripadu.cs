@@ -65,11 +65,21 @@ namespace SpravaSoudnichPripadu
                 Jmeno = "Oldřich",
                 Prijmeni = "Přísný",
                 Adresa = "Praha",
-                cak = 125125
+                cak = 125125,
+                RoleVRizeniZastupce = RoleVRizeniZastupce.ZástupceŽalobce
+            };
+
+            var zastupce2 = new Zastupce
+            {
+                Jmeno = "Jindřich",
+                Prijmeni = "Veselý",
+                Adresa = "Praha",
+                cak = 125128,
+                RoleVRizeniZastupce = RoleVRizeniZastupce.ZástupceŽalovaného
             };
 
             var ucastnici = new List<Ucastnik> { ucastnik1, ucastnik2 };
-            var zastupci = new List<Zastupce> { zastupce1 };
+            var zastupci = new List<Zastupce> { zastupce1, zastupce2 };
 
             PridatPripad(
                 popis: "Případ ve věci náhrady škody za způsobenou dopravní nehodu dne 12. 5. 2024.",
@@ -85,7 +95,6 @@ namespace SpravaSoudnichPripadu
         {
             PripadDict.TryGetValue(cisloPripadu, out Pripad pripad);
             return pripad;
-            // možná tohle vyházet, když to řešim v logice filtrování?
 
         }
 

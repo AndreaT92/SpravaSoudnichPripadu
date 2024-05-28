@@ -68,7 +68,18 @@
                                       $"Specializace: {nalezenyPripad.Soudci.Specializace}." +
                                       $"Jednání nařízeno na den: {nalezenyPripad.DatumJednani}. " +
                                       $"Případ skončen: {nalezenyPripad.JeSkonceno}. "); ; ;
-                
+                Console.WriteLine("Účastníci řízení:");
+                foreach (var ucastnik in nalezenyPripad.Ucastnici)
+                {
+                    Console.WriteLine($"- {ucastnik.Jmeno} {ucastnik.Prijmeni}, Adresa: {ucastnik.Adresa}, Role: {ucastnik.roleVRizeni}");
+                }
+                Console.WriteLine();
+                Console.WriteLine("Zástupci:");
+                foreach (var zastupce in nalezenyPripad.Zastupci)
+                {
+                    Console.WriteLine($"- {zastupce.Jmeno} {zastupce.Prijmeni}, Adresa: {zastupce.Adresa}, ČAK: {zastupce.cak}, Role: {zastupce.RoleVRizeniZastupce}");
+                }
+                Console.WriteLine();
             }
             else
             {
@@ -99,7 +110,18 @@
                 foreach (var prip in filtrovanePripady) // cyklus pro vypsání nalezených případů
                 {
                     Console.WriteLine($"Případ {prip.CisloPripadu}: {prip.Popis}, Datum jednání: {prip.DatumJednani}, Soudce: {prip.Soudci.Jmeno} {prip.Soudci.Prijmeni}, Skončeno: {prip.JeSkonceno}");
+                    Console.WriteLine("Účastníci řízení:");
+                    foreach (var ucastnik in prip.Ucastnici)
+                    {
+                        Console.WriteLine($"- {ucastnik.Jmeno} {ucastnik.Prijmeni}, Adresa: {ucastnik.Adresa}, Role: {ucastnik.roleVRizeni}");
+                    }
+                    Console.WriteLine("Zástupci:");
+                    foreach (var zastupcePripadu in prip.Zastupci)
+                    {
+                        Console.WriteLine($"- {zastupcePripadu.Jmeno} {zastupcePripadu.Prijmeni}, Adresa: {zastupcePripadu.Adresa}, ČAK: {zastupcePripadu.cak}, Role: {zastupcePripadu.RoleVRizeniZastupce}");
+                    }
                 }
+
             }
             else
             {
