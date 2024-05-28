@@ -1,4 +1,5 @@
 ﻿using SpravaSoudnichPripadu.osoby;
+using System.Collections.Generic;
 
 namespace SpravaSoudnichPripadu
 {
@@ -19,56 +20,11 @@ namespace SpravaSoudnichPripadu
             // a plus možnost zadat nové od uživatele a aby si je to pak tedy uchovalo. 
 
             var spravaPripadu = new SpravaPripadu();
+            spravaPripadu.PridatPreddefinovanePripady();
 
             try
             {
-                var soudce1 = new Soudce
-                {
-                    Jmeno = "Jan",
-                    Prijmeni = "Novak",
-                    Adresa = "Praha 1",
-                    Specializace = Specializace.CivilníPrávo
-                };
-
-                var ucastnik1 = new Ucastnik
-                {
-                    Jmeno = "Petr",
-                    Prijmeni = "Svoboda",
-                    Adresa = "Brno",
-                    roleVRizeni = RoleVRizeni.Žalobce
-                };
-
-                var ucastnik2 = new Ucastnik
-                {
-                    Jmeno = "Jan",
-                    Prijmeni = "Malý",
-                    Adresa = "Praha",
-                    roleVRizeni = RoleVRizeni.Žalovaný
-                };
-
-                var zastupce1 = new Zastupce
-                {
-                    Jmeno = "Oldřich",
-                    Prijmeni = "Přísný",
-                    Adresa = "Praha",
-                    cak = 125125
-                };
-
-                var pripad = new Pripad
-                {
-                    CisloPripadu = 1,
-                    Popis = "Případ ve věci náhrady škody za způsobenou dopravní nehodu dne 12. 5. 2024.",
-                    DatumJednani = new DateTime(2024, 6, 1),
-                    Soudci = soudce1,
-                    JeSkonceno = false,
-                };
-                // přidání do jednotlivých kolekcí
-                pripad.Ucastnici.Add(ucastnik1);
-                pripad.Ucastnici.Add(ucastnik2);
-                pripad.Zastupci.Add(zastupce1);
-                // přidání do kolekce případů
-                spravaPripadu.PridatPripad(new DateTime(2024, 6, 1));
-
+                
                 var logikaFiltrovani = new LogikaFiltrovani(spravaPripadu);
 
                 // spuštění filtrovací metody 

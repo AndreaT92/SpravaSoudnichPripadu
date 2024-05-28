@@ -1,30 +1,84 @@
-﻿namespace SpravaSoudnichPripadu
+﻿using SpravaSoudnichPripadu.osoby;
+
+namespace SpravaSoudnichPripadu
 {
+    // třída pro spravování kolekcí případů - přidat, najít, odebrat a filtrovat 
+    // metody pro manipulaci s daty
     public class SpravaPripadu 
     {
-        // class pro spravování kolekcí případů - přidat, najít, odebrat, filtrovat 
-        // metody pro manipulaci s daty
+        
         private int pocitadloPripadu;
         public List<Pripad> Pripady { get; set; }
-        public Dictionary<int, Pripad> PripadDict { get; set; } // pro lepší hledání přes číslo? 
+        public Dictionary<int, Pripad> PripadDict { get; set; } 
 
         public SpravaPripadu()
         {
             Pripady = new List<Pripad>();
             PripadDict = new Dictionary<int, Pripad>();
-            pocitadloPripadu = 0;
+            pocitadloPripadu = 1;
         }
 
-        public void PridatPripad(DateTime datumJednani) // přidat ostatní parametry !!!
+        public void PridatPripad(string popis, List<Ucastnik> ucastnici, Soudce soudce, List<Zastupce> zastupci, DateTime datumJednani, bool jeSkonceno)
         {
             Pripad pripad = new Pripad
             {
+                Popis = popis,
+                Ucastnici = ucastnici,
+                Soudci = soudce,
+                Zastupci = zastupci,
                 DatumJednani = datumJednani,
-                CisloPripadu = ++pocitadloPripadu
+                JeSkonceno = jeSkonceno,
+            };
+            Pripady.Add(pripad);
+            PripadDict[pocitadloPripadu] = pripad;
+            pocitadloPripadu++;
+        }
+
+        public void PridatPreddefinovanePripady()
+        {
+            var soudce1 = new Soudce
+            {
+                Jmeno = "Jan",
+                Prijmeni = "Novak",
+                Adresa = "Praha 1",
+                Specializace = Specializace.CivilníPrávo
             };
 
-            Pripady.Add(pripad);
-            PripadDict[pripad.CisloPripadu] = pripad;
+            var ucastnik1 = new Ucastnik
+            {
+                Jmeno = "Petr",
+                Prijmeni = "Svoboda",
+                Adresa = "Brno",
+                roleVRizeni = RoleVRizeni.Žalobce
+            };
+
+            var ucastnik2 = new Ucastnik
+            {
+                Jmeno = "Jan",
+                Prijmeni = "Malý",
+                Adresa = "Praha",
+                roleVRizeni = RoleVRizeni.Žalovaný
+            };
+
+            var zastupce1 = new Zastupce
+            {
+                Jmeno = "Oldřich",
+                Prijmeni = "Přísný",
+                Adresa = "Praha",
+                cak = 125125
+            };
+
+            var ucastnici = new List<Ucastnik> { ucastnik1, ucastnik2 };
+            var zastupci = new List<Zastupce> { zastupce1 };
+
+            PridatPripad(
+                popis: "Případ ve věci náhrady škody za způsobenou dopravní nehodu dne 12. 5. 2024.",
+                ucastnici: ucastnici,
+                soudce: soudce1,
+                zastupci: zastupci,
+                datumJednani: new DateTime(2024, 6, 1),
+                jeSkonceno: false                
+            );
         }
 
         public Pripad NajitPripadPodleCisla(int cisloPripadu)
