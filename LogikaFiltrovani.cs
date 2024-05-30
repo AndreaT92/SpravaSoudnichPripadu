@@ -14,7 +14,7 @@
 
         public void Spustit() // metoda pro zobrazení výběru možností + potřebuji přidat case na přidání případu
                               // ještě by se mi líbilo hledání osob a informací o nich  + případy, ve kterých se vyskytují 
-                              // možná funkce vypsání všech evidovaných případů? 
+                              
         {
             while (true)
             {
@@ -22,8 +22,6 @@
                 Console.WriteLine("1 - Najít případ dle čísla");
                 Console.WriteLine("2 - Filtrovat případy podle kritérii");
                 Console.WriteLine("3 - Odstranit případ dle čísla");
-                //Console.WriteLine(" Najít případ podle osoby."); + přidat metodu NajitPripadPodleOsoby
-                // Console.WriteLine ("Vypsat všechny evidované případy")
                 Console.WriteLine("4 - Konec");
                 
                 var akce = Console.ReadLine();
@@ -51,7 +49,7 @@
             }
         }
 
-        private void NajitPripadPodleCisla() // metoda, která vyhledá případ podle čísla  - je matoucí, že se to jmenuje stejně jako metoda ve SpravaPripadu? 
+        private void NajitPripadPodleCisla() // metoda, která vyhledá případ podle čísla 
         {
             Console.Write("Zadejte číslo případu: ");
             if (int.TryParse(Console.ReadLine(), out int cisloPripadu))
@@ -88,32 +86,28 @@
             }
         }
 
-        // logika na filtrování případů - podle všeho chci? Chci podle všech parametrů? 
-        // vytvořit metodu pro každou položku filtrování zvlášť pro větší přehlednost??
-        private void FiltrovatPripady() // metoda pro samotné filtrování a vyhledání, vygooglila jsem si nullable pro ošetření vstupu.. co ale když zadá špatně datetime? umožnit jim to zadat znovu? Nutno přepsat :D 
+
+        private void FiltrovatPripady() // metoda pro samotné filtrování a vyhledání případu
         {
             DateTime? datumJednani = HledaniPodleDataJednani();
             bool? jeSkonceno = HledaniPodleStavu();
+            string soudce = NajitPodleOsoby("Zadejte jméno a příjmení soudce nebo nechte prázdné: ");
+            string zastupce = NajitPodleOsoby("Zadejte jméno a příjemní zástupce nebo nechte prázdné: ");
+            string ucastnik = NajitPodleOsoby("Zadejte jméno a příjmení účastníka nebo nechte prázdné: ");
 
-            Console.Write("Zadejte jméno soudce nebo nechte prázdné: "); // filtr dle soudce, dopárovat s metodami JeJmenoSpravne a ZmensiPismeno
-            var soudce = Console.ReadLine();
 
-            Console.Write("Zadejte jméno zástupce nebo nechte prázdné: "); // filtr dle zástupce, dopárovat s metodami JeJmenoSpravne a ZmensiPismeno
-            var zastupce = Console.ReadLine();
+            // přidat filtr dle účastníka, sop zaplacen...
 
-            // přidat filtr dle účastníka, sop zaplacen... 
-            // dat tenhle cyklus taky jako samostatnou metodu? 
-
-            var filtrovanePripady = spravaPripadu.FiltrovatPripady(datumJednani, jeSkonceno, soudce, zastupce);
-            if (filtrovanePripady.Any())  // nemanipuluju tady s daty, tak jsem použila 
+            var filtrovanePripady = spravaPripadu.FiltrovatPripady(datumJednani, jeSkonceno, soudce, zastupce, ucastnik);
+            if (filtrovanePripady.Any())  // nemanipuluju tady s daty, tak jsem použila if else
             {
                 foreach (var prip in filtrovanePripady) // cyklus pro vypsání nalezených případů
                 {
                     Console.WriteLine($"Případ {prip.CisloPripadu}: {prip.Popis}, Datum jednání: {prip.DatumJednani}, Soudce: {prip.Soudci.Jmeno} {prip.Soudci.Prijmeni}, Skončeno: {prip.JeSkonceno}");
                     Console.WriteLine("Účastníci řízení:");
-                    foreach (var ucastnik in prip.Ucastnici)
+                    foreach (var ucastnikPripadu in prip.Ucastnici)
                     {
-                        Console.WriteLine($"- {ucastnik.Jmeno} {ucastnik.Prijmeni}, Adresa: {ucastnik.Adresa}, Role: {ucastnik.roleVRizeni}");
+                        Console.WriteLine($"- {ucastnikPripadu.Jmeno} {ucastnikPripadu.Prijmeni}, Adresa: {ucastnikPripadu.Adresa}, Role: {ucastnikPripadu.roleVRizeni}");
                     }
                     Console.WriteLine("Zástupci:");
                     foreach (var zastupcePripadu in prip.Zastupci)
@@ -141,7 +135,7 @@
 
                 if (string.IsNullOrEmpty(stavHledany))
                 {
-                    break; // Pokud je vstup prázdný, ukončíme smyčku
+                    break; 
                 }
 
                 if (bool.TryParse(stavHledany, out bool parsedBool))
@@ -151,7 +145,6 @@
                 else
                 {
                     Console.WriteLine("Chybný formát. Zadejte prosím 'true' nebo 'false'.");
-                    // Zde můžete provést další akce v případě chybného formátu
                 }
             } while (jeSkonceno == null);
             return jeSkonceno;
@@ -163,7 +156,7 @@
 
             do
             {
-                Console.Write("Zadejte datum jednání (YYYY-MM-DD) nebo nechte prázdné: "); // filtr podle jednání
+                Console.Write("Zadejte datum jednání (YYYY-MM-DD) nebo nechte prázdné: "); 
                 var datumHledane = Console.ReadLine();
 
                 if (string.IsNullOrEmpty(datumHledane))
@@ -201,37 +194,39 @@
                 }
             }
         }
-        //    //private string ZmensiPismeno(string prompt) - metoda na podchycení špatně zadaného malého písmena u jména - doplnit do FiltrovatPripady
-        //    //{
-        //    //    while (true)
-        //    //    {
-        //    //        Console.Write("Zadejte jméno: ");
-        //    var jmeno = Console.ReadLine();
-        //    if (IsValidName(name))
-        //    {
-        //        return string.IsNullOrEmpty(name) ? null : name.ToLower(); // Normalizace na malá písmena
-        //    }
-        //Console.WriteLine("Neplatné jméno. Zadejte pouze písmena a mezery.");
-        //    //    }
-        //}
+        private static string NajitPodleOsoby(string prompt)
+        {
+            while (true)
+            {
+                Console.Write(prompt);
+                var jmeno = Console.ReadLine();
 
-        //private bool jeJmenoSpravne(string jmeno) - metoda na kontrolu, zda bylo zadáno jméno správně - doplnit do FiltrovatPripady
-        //{
-        //    if (string.IsNullOrEmpty(jmeno))
-        //    {
-        //        return true; // Prázdný vstup je povolen
-        //    }
-        //    foreach (char c in jmeno)
-        //    {
-        //        if (!char.IsLetter(c) && c != ' ')
-        //        {
-        //            return false;
-        //        }
-        //    }
-        //    return true;
-        //}
+                if (string.IsNullOrEmpty(jmeno))
+                {
+                    return null;
+                }
 
+                if (JeJmenoSpravne(jmeno))
+                {
+                    return jmeno.ToLower();
+                }
+                else
+                {
+                    Console.WriteLine("Neplatné jméno. Zadejte pouze písmena a mezery.");
+                }
+            }
+        }
 
+        private static bool JeJmenoSpravne(string jmeno)
+        {
+            foreach (char c in jmeno)
+            {
+                if (!char.IsLetter(c) && c != ' ')
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }
-

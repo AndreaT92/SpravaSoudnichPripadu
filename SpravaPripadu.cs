@@ -109,7 +109,7 @@ namespace SpravaSoudnichPripadu
             return povedloSe;
         }
 
-        public List<Pripad> FiltrovatPripady(DateTime? datumJednani, bool? jeSkonceno, string soudce, string zastupce) // metoda, která vytvoří list vyfiltrovaných případů, nechat tady? Chtělo by to víc ůdajů na vypsání. Dala jsem zkušební část. 
+        public List<Pripad> FiltrovatPripady(DateTime? datumJednani, bool? jeSkonceno, string soudce, string zastupce, string ucastnik) // metoda, která vytvoří list vyfiltrovaných případů, nechat tady? Chtělo by to víc ůdajů na vypsání. Dala jsem zkušební část. 
         {
             var filtrovanePripady = Pripady.AsQueryable(); // po googlování by to mělo mělo kolekci převést na IQueryable<Pripad> a 
                                                            // umožnit mi provádět linq dotazy lépe - kdybych chtěla v budoucnu dělat složitější
@@ -127,12 +127,20 @@ namespace SpravaSoudnichPripadu
 
             if (!string.IsNullOrEmpty(soudce))
             {
-                filtrovanePripady = filtrovanePripady.Where(p => (p.Soudci.Jmeno + " " + p.Soudci.Prijmeni).Contains(soudce));
+                var soudceLower = soudce.ToLower();
+                filtrovanePripady = filtrovanePripady.Where(p => (p.Soudci.Jmeno.ToLower() + " " + p.Soudci.Prijmeni.ToLower()).Contains(soudceLower));
             }
 
             if (!string.IsNullOrEmpty(zastupce))
             {
-                filtrovanePripady = filtrovanePripady.Where(p => p.Zastupci.Any(z => (z.Jmeno + " " + z.Prijmeni).Contains(zastupce)));
+                var zastupceLower = zastupce.ToLower();
+                filtrovanePripady = filtrovanePripady.Where(p => p.Zastupci.Any(z => (z.Jmeno.ToLower() + " " + z.Prijmeni.ToLower()).Contains(zastupceLower)));
+            }
+
+            if (!string.IsNullOrEmpty(ucastnik))
+            {
+                var ucastnikLower = ucastnik.ToLower();
+                filtrovanePripady = filtrovanePripady.Where(p => p.Ucastnici.Any(u => (u.Jmeno.ToLower() + " " + u.Prijmeni.ToLower()).Contains(ucastnikLower)));
             }
 
             return filtrovanePripady.ToList();
