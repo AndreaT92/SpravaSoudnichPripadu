@@ -194,11 +194,11 @@
                 }
             }
         }
-        private static string NajitPodleOsoby(string prompt)
+        private static string NajitPodleOsoby(string pokynKZadani)
         {
             while (true)
             {
-                Console.Write(prompt);
+                Console.Write(pokynKZadani);
                 var jmeno = Console.ReadLine();
 
                 if (string.IsNullOrEmpty(jmeno))
