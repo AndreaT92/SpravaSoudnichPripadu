@@ -41,7 +41,7 @@ namespace SpravaSoudnichPripadu
                 Jmeno = "Jan",
                 Prijmeni = "Novak",
                 Adresa = "Praha 1",
-                Specializace = Specializace.CivilníPrávo
+                Specializace = Specializace.CivilniPravo
             };
 
             var ucastnik1 = new Ucastnik

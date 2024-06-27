@@ -33,7 +33,7 @@ namespace SpravaSoudnichPripadu
             sb.AppendLine("Soudci:");
             foreach (var soudce in Soudci)
             {
-                sb.AppendLine($"- {soudce}, Specializace: {soudce.Specializace}");
+                sb.AppendLine($"- {soudce}");
             }
             sb.AppendLine("Účastníci řízení:");
             foreach (var ucastnik in Ucastnici)
@@ -43,7 +43,7 @@ namespace SpravaSoudnichPripadu
             sb.AppendLine("Zástupci:");
             foreach (var zastupce in Zastupci)
             {
-                sb.AppendLine($"- {zastupce}, ČAK: {zastupce.cak}, Role: {zastupce.RoleVRizeniZastupce}");
+                sb.AppendLine($"- {zastupce}");
             }
             return sb.ToString();
         }

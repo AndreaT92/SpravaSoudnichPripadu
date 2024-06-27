@@ -1,13 +1,18 @@
-﻿namespace SpravaSoudnichPripadu.osoby
-{
+﻿namespace SpravaSoudnichPripadu.osoby;
+    using System.ComponentModel;
+
     // odvozená třída pro soudce 
     public class Soudce : Osoba
     {
          public Specializace Specializace { get; set; }
-        //public int unikatniCislo { get; set; } //pro rychlejsi filtrovani?
 
-        public bool JeCivil=> Specializace == Specializace.CivilníPrávo;
-        public bool JeTrest => Specializace == Specializace.TrestníPrávo;
-        public bool JeInsko => Specializace == Specializace.InsolvenčníPrávo;
+    public bool JeCivil => Specializace == Specializace.CivilniPravo;
+    public bool JeTrest => Specializace == Specializace.TrestniPravo;
+    public bool JeInsko => Specializace == Specializace.InsolvencniPravo;
+
+    public override string ToString()
+    {
+        return $"Jméno: {Jmeno}, Příjmení: {Prijmeni}, Adresa: {Adresa}, Specializace: {Specializace.GetDescription()}";
     }
 }
+

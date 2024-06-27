@@ -13,10 +13,13 @@
         public int cak { get; set; }
 
         public RoleVRizeniZastupce RoleVRizeniZastupce { get; set; }
-        //public int unikatniCislo { get; set; } //pro rychlejsi filtrovani?
 
         public bool JeRoleVRizeniZastZalobce => RoleVRizeniZastupce == RoleVRizeniZastupce.ZástupceŽalobce;
         public bool JeRoleVRizeniZastZalovaneho => RoleVRizeniZastupce == RoleVRizeniZastupce.ZástupceŽalovaného;
+        public override string ToString()
+        {
+            return $"Jméno: {Jmeno}, Příjmení: {Prijmeni}, Adresa: {Adresa}, ČAK: {cak}, Role v řízení: {RoleVRizeniZastupce.GetDescription()}";
+        }
 
     }
 }
