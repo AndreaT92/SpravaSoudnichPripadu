@@ -18,13 +18,13 @@ namespace SpravaSoudnichPripadu
             pocitadloPripadu = 1;
         }
 
-        public void PridatPripad(string popis, List<Ucastnik> ucastnici, Soudce soudce, List<Zastupce> zastupci, DateTime datumJednani, bool jeSkonceno)
+        public void PridatPripad(string popis, List<Ucastnik> ucastnici, List<Soudce> soudci, List<Zastupce> zastupci, DateTime datumJednani, bool jeSkonceno)
         {
             Pripad pripad = new Pripad
             {
                 Popis = popis,
                 Ucastnici = ucastnici,
-                Soudci = soudce,
+                Soudci = soudci,
                 Zastupci = zastupci,
                 DatumJednani = datumJednani,
                 JeSkonceno = jeSkonceno,
@@ -80,40 +80,39 @@ namespace SpravaSoudnichPripadu
 
             var ucastnici = new List<Ucastnik> { ucastnik1, ucastnik2 };
             var zastupci = new List<Zastupce> { zastupce1, zastupce2 };
+            var soudci = new List<Soudce> { soudce1 };
 
             PridatPripad(
                 popis: "Případ ve věci náhrady škody za způsobenou dopravní nehodu dne 12. 5. 2024.",
                 ucastnici: ucastnici,
-                soudce: soudce1,
+                soudci: soudci,
                 zastupci: zastupci,
                 datumJednani: new DateTime(2024, 6, 1),
                 jeSkonceno: false                
             );
         }
 
-        public Pripad NajitPripadPodleCisla(int cisloPripadu)
+        public Pripad? NajitPripadPodleCisla(int cisloPripadu)
         {
-            PripadDict.TryGetValue(cisloPripadu, out Pripad pripad);
+            PripadDict.TryGetValue(cisloPripadu, out Pripad? pripad);
             return pripad;
 
         }
 
         public bool OdebratPripad(int cisloPripadu)
         {
-            bool povedloSe = PripadDict.TryGetValue(cisloPripadu, out Pripad pripad);
-            if (povedloSe) 
-            { 
+            bool povedloSe = PripadDict.TryGetValue(cisloPripadu, out Pripad? pripad);
+            if (povedloSe && pripad != null)
+            {
                 Pripady.Remove(pripad);
                 PripadDict.Remove(cisloPripadu);
             }
             return povedloSe;
         }
 
-        public List<Pripad> FiltrovatPripady(DateTime? datumJednani, bool? jeSkonceno, string soudce, string zastupce, string ucastnik) // metoda, která vytvoří list vyfiltrovaných případů, nechat tady? Chtělo by to víc ůdajů na vypsání. Dala jsem zkušební část. 
+        public List<Pripad> FiltrovatPripady(DateTime? datumJednani, bool? jeSkonceno, string? soudce, string? zastupce, string? ucastnik) // metoda, která vytvoří list vyfiltrovaných případů, nechat tady? Chtělo by to víc ůdajů na vypsání. Dala jsem zkušební část. 
         {
-            var filtrovanePripady = Pripady.AsQueryable(); // po googlování by to mělo mělo kolekci převést na IQueryable<Pripad> a 
-                                                           // umožnit mi provádět linq dotazy lépe - kdybych chtěla v budoucnu dělat složitější
-                                                           // dotazy, ale jestli je to zbytecne, napsala bych var filtrovanePripady = Pripady.ToList();
+            var filtrovanePripady = Pripady.AsEnumerable(); 
 
             if (datumJednani.HasValue)
             {
@@ -127,21 +126,22 @@ namespace SpravaSoudnichPripadu
 
             if (!string.IsNullOrEmpty(soudce))
             {
-                var soudceLower = soudce.ToLower();
-                filtrovanePripady = filtrovanePripady.Where(p => (p.Soudci.Jmeno.ToLower() + " " + p.Soudci.Prijmeni.ToLower()).Contains(soudceLower));
+                filtrovanePripady = filtrovanePripady.Where(p => p.Soudci.Any(s => (s.Jmeno + " " + s.Prijmeni)
+                                .Contains(soudce, StringComparison.OrdinalIgnoreCase)));
             }
 
             if (!string.IsNullOrEmpty(zastupce))
             {
-                var zastupceLower = zastupce.ToLower();
-                filtrovanePripady = filtrovanePripady.Where(p => p.Zastupci.Any(z => (z.Jmeno.ToLower() + " " + z.Prijmeni.ToLower()).Contains(zastupceLower)));
+                filtrovanePripady = filtrovanePripady.Where(p => p.Zastupci.Any(z => (z.Jmeno + " " + z.Prijmeni)
+                                    .Contains(zastupce, StringComparison.OrdinalIgnoreCase)));
             }
 
             if (!string.IsNullOrEmpty(ucastnik))
             {
-                var ucastnikLower = ucastnik.ToLower();
-                filtrovanePripady = filtrovanePripady.Where(p => p.Ucastnici.Any(u => (u.Jmeno.ToLower() + " " + u.Prijmeni.ToLower()).Contains(ucastnikLower)));
+                filtrovanePripady = filtrovanePripady.Where(p => p.Ucastnici.Any(u => (u.Jmeno + " " + u.Prijmeni)
+                                    .Contains(ucastnik, StringComparison.OrdinalIgnoreCase)));
             }
+
 
             return filtrovanePripady.ToList();
         }
