@@ -12,7 +12,7 @@
 
     public override string ToString()
     {
-        return $"Jméno: {Jmeno}, Příjmení: {Prijmeni}, Adresa: {Adresa}, Specializace: {Specializace.GetDescription()}";
+        return $"Jméno: {Jmeno}, Příjmení: {Prijmeni}, Adresa: {Adresa}, Specializace: {Specializace.ZiskejPopis()}";
     }
 }
 

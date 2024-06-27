@@ -18,7 +18,7 @@
         public bool JeRoleVRizeniZastZalovaneho => RoleVRizeniZastupce == RoleVRizeniZastupce.ZástupceŽalovaného;
         public override string ToString()
         {
-            return $"Jméno: {Jmeno}, Příjmení: {Prijmeni}, Adresa: {Adresa}, ČAK: {cak}, Role v řízení: {RoleVRizeniZastupce.GetDescription()}";
+            return $"Jméno: {Jmeno}, Příjmení: {Prijmeni}, Adresa: {Adresa}, ČAK: {cak}, Role v řízení: {RoleVRizeniZastupce.ZiskejPopis()}";
         }
 
     }
